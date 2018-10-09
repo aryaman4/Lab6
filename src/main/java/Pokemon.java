@@ -169,6 +169,9 @@ public class Pokemon {
      * @return whether or not the game has ended
      */
     public boolean attack(final Pokemon opponent) {
+        if (opponent == null) {
+            return false;
+        }
         /*
          * Get the attack and defense bonuses.
          */

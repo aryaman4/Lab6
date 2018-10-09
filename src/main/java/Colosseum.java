@@ -102,8 +102,49 @@ public class Colosseum {
      * (Look, we can return objects too!)
      */
     public static Pokemon buildPokemon() {
-        Pokemon returnPokemon = null;
-        return returnPokemon;
+        Pokemon tempPokemon = null;
+        printTypeMenu();
+        myScan = new Scanner(System.in);
+        int type = myScan.nextInt();
+        switch(type) {
+            case 1: {
+                tempPokemon = new ElectricPokemon();
+                break;
+            }
+            case 2: {
+                tempPokemon = new FirePokemon();
+                break;
+            }
+            case 3: {
+                tempPokemon = new WaterPokemon();
+                break;
+            }
+            default: {
+                System.out.println("Sorry, you must pick either 1, 2, or 3.");
+            }
+        }
+        System.out.print("Please name your Pokemon: ");
+        tempPokemon.setName(myScan.next());
+        System.out.print("How many hit points will it have? (1-50): ");
+        tempPokemon.setHitPoints(myScan.nextInt());
+        while (tempPokemon.getHitPoints() < 1 || tempPokemon.getHitPoints() > MAX_HIT_POINTS) {
+            System.out.print("Sorry. Hit points must be between 1 and 50: ");
+            tempPokemon.setHitPoints(myScan.nextInt());
+        }
+        System.out.println("Split fifty points between attack level and defense level");
+        System.out.print("Enter your attack level (1-49): ");
+        tempPokemon.setAttackLevel(myScan.nextInt());
+        while (tempPokemon.getAttackLevel() < 1 || tempPokemon.getAttackLevel() >= MAX_HIT_POINTS) {
+            System.out.print("Sorry. The attack level must be between 1 and 49: ");
+            tempPokemon.setAttackLevel(myScan.nextInt());
+        }
+        System.out.print("Enter your defense level (1-" + (50 - tempPokemon.getAttackLevel()) + "): ");
+        tempPokemon.setDefenseLevel(myScan.nextInt());
+        while (tempPokemon.getDefenseLevel() < 1 || tempPokemon.getDefenseLevel() > (50 - tempPokemon.getAttackLevel())) {
+            System.out.print("Sorry. The defense level must be between 1 and " + (50 - tempPokemon.getAttackLevel()) + ": ");
+            tempPokemon.setDefenseLevel(myScan.nextInt());
+        }
+        return tempPokemon;
     }
 
     /**
@@ -224,7 +265,8 @@ public class Colosseum {
             System.out.println("");
             System.out.println("Round " + (i + 1) + "!");
             System.out.println("");
-
+            System.out.println((firstPokemon.toString()));
+            System.out.println((secondPokemon.toString()));
             ifWinner = firstPokemon.attack(secondPokemon);
             if (!ifWinner) {
                 ifWinner = secondPokemon.attack(firstPokemon);
